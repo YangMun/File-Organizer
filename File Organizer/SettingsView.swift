@@ -1,10 +1,3 @@
-//
-//  SettingsView.swift
-//  File Organizer
-//
-//  Created by 양문경 on 3/21/25.
-//
-
 import SwiftUI
 
 struct SettingsView: View {
