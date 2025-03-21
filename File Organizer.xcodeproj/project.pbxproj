@@ -16,7 +16,7 @@
 		81DAB9702D8D02B000027CA6 /* FileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB96F2D8D02AE00027CA6 /* FileView.swift */; };
 		81DAB9722D8D02C300027CA6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9712D8D02C200027CA6 /* SettingsView.swift */; };
 		81DAB9752D8D08BC00027CA6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 81DAB9742D8D08BC00027CA6 /* .gitignore */; };
-		81DAB9772D8D08DC00027CA6 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 81DAB9762D8D08DC00027CA6 /* ReadMe.md */; };
+		81DAB9792D8D0BB500027CA6 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 81DAB9782D8D0BB500027CA6 /* ReadMe.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +32,7 @@
 		81DAB96F2D8D02AE00027CA6 /* FileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileView.swift; sourceTree = "<group>"; };
 		81DAB9712D8D02C200027CA6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		81DAB9742D8D08BC00027CA6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		81DAB9762D8D08DC00027CA6 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
+		81DAB9782D8D0BB500027CA6 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +51,7 @@
 			children = (
 				81DAB9632D8CFE7A00027CA6 /* File Organizer */,
 				81DAB94C2D8CFE7300027CA6 /* Products */,
+				81DAB9782D8D0BB500027CA6 /* ReadMe.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,7 +85,6 @@
 				81DAB9612D8CFE7A00027CA6 /* File_Organizer.entitlements */,
 				81DAB9622D8CFE7A00027CA6 /* File_OrganizerApp.swift */,
 				81DAB9742D8D08BC00027CA6 /* .gitignore */,
-				81DAB9762D8D08DC00027CA6 /* ReadMe.md */,
 			);
 			path = "File Organizer";
 			sourceTree = "<group>";
@@ -152,7 +152,7 @@
 			files = (
 				81DAB9662D8CFE7A00027CA6 /* Preview Assets.xcassets in Resources */,
 				81DAB9752D8D08BC00027CA6 /* .gitignore in Resources */,
-				81DAB9772D8D08DC00027CA6 /* ReadMe.md in Resources */,
+				81DAB9792D8D0BB500027CA6 /* ReadMe.md in Resources */,
 				81DAB9672D8CFE7A00027CA6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  File Organizer
-//
-//  Created by 양문경 on 3/21/25.
-//
-
 import SwiftUI
 
 struct FileTypeItem: Identifiable {
@@ -69,8 +62,6 @@ struct FileView: View {
 }
 
 #Preview {
-    NavigationView {
-        FileView()
-    }
+    FileView()
 }
 
