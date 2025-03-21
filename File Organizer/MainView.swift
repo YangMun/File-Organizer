@@ -2,18 +2,24 @@ import SwiftUI
 
 struct MainView: View {
     @State private var selectedTab = 0
+    @StateObject private var fileUploader = FileUpLoadFunction()
     
     var body: some View {
         TabView(selection: $selectedTab) {
             // 홈 탭
-            VStack {
-                ScrollView {
-                    VStack(spacing: 20) {
-                        FileUpLoadView()
-                        RecentUpLoadView()
-                    }
-                    .padding()
+            ZStack {
+                Color(UIColor.systemGray6)
+                    .ignoresSafeArea()
+                
+                VStack {
+                    FileUpLoadView(fileUploader: fileUploader)
+                        .frame(height: 280)
+                    
+                    RecentUpLoadView(fileUploader: fileUploader)
+                        .frame(maxHeight: .infinity)
                 }
+                .padding(.horizontal)
+                .padding(.top, 8)
             }
             .tabItem {
                 Image(systemName: "house.fill")
@@ -37,7 +43,15 @@ struct MainView: View {
                 }
                 .tag(2)
         }
-        .background(Color(UIColor.systemGray6))
+        .onAppear {
+            // TabBar 스타일 설정
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            
+            UITabBar.appearance().standardAppearance = appearance
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+        }
     }
 }
 
