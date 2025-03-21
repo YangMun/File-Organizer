@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct FileUpLoadView: View {
-    @StateObject private var fileUploader = FileUpLoadFunction()
+    @ObservedObject var fileUploader: FileUpLoadFunction
     
     var body: some View {
         VStack(spacing: 20) {
@@ -19,17 +19,7 @@ struct FileUpLoadView: View {
                 .foregroundColor(.gray)
             
             Button(action: {
-                fileUploader.selectedFiles.removeAll()
-                fileUploader.openFilePicker(
-                    fileTypes: [.item],
-                    allowsMultipleSelection: true,
-                    onFileSelected: { url in
-                        // 개별 파일 선택 시 처리는 FileUpLoadFunction에서 함
-                    },
-                    onCancel: {
-                        print("파일 선택이 취소되었습니다.")
-                    }
-                )
+                fileUploader.openFilePicker()
             }) {
                 Text("파일 선택하기")
                     .foregroundColor(.white)
@@ -37,36 +27,27 @@ struct FileUpLoadView: View {
                     .background(Color.blue)
                     .cornerRadius(8)
             }
+            .disabled(fileUploader.isLoading)
             
             if fileUploader.isLoading {
                 VStack(spacing: 8) {
-                    Text("파일 업로드 중...")
+                    Text("파일 처리 중... (\(fileUploader.processedFilesCount)/\(fileUploader.totalFiles))")
                         .font(.caption)
                         .foregroundColor(.gray)
                     
-                    // 선형 프로그레스 바
-                    GeometryReader { geometry in
-                        ZStack(alignment: .leading) {
-                            // 배경 게이지 바
-                            Rectangle()
-                                .foregroundColor(Color.gray.opacity(0.2))
-                                .frame(width: geometry.size.width, height: 8)
-                                .cornerRadius(4)
-                            
-                            // 진행 게이지 바
-                            Rectangle()
-                                .foregroundColor(.blue)
-                                .frame(width: geometry.size.width * CGFloat(fileUploader.uploadProgress), height: 8)
-                                .cornerRadius(4)
-                                .animation(.linear, value: fileUploader.uploadProgress)
-                        }
+                    if !fileUploader.currentProcessingFileName.isEmpty {
+                        Text(fileUploader.currentProcessingFileName)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .lineLimit(1)
                     }
-                    .frame(height: 8)
-                    .frame(width: 200)
                     
-                    Text("\(Int(fileUploader.uploadProgress * 100))%")
-                        .font(.caption)
-                        .foregroundColor(.blue)
+                    ProgressView(value: fileUploader.uploadProgress) {
+                        Text("\(Int(fileUploader.uploadProgress * 100))%")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                    }
+                    .frame(width: 200)
                 }
                 .padding(.top, 10)
             }
