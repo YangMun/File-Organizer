@@ -5,11 +5,19 @@ import MobileCoreServices
 // 파일 상단에 UploadedFile 구조체 추가
 struct UploadedFile: Identifiable {
     let id = UUID()
-    let url: URL
+    let bookmarkData: Data
     let name: String
     let size: Int64
     let date: Date
     let fileExtension: String
+    
+    var url: URL? {
+        var isStale = false
+        return try? URL(resolvingBookmarkData: bookmarkData,
+                       options: [],
+                       relativeTo: nil,
+                       bookmarkDataIsStale: &isStale)
+    }
 }
 
 /// iCloud Drive에서 파일을 선택하는 기능을 제공하는 클래스
@@ -25,14 +33,26 @@ class FileUpLoadFunction: NSObject, ObservableObject {
     // MARK: - Private Properties
     private var documentPickerController: UIDocumentPickerViewController?
     private var processingTask: Task<Void, Never>?
+    private let fileCoordinator = NSFileCoordinator()
+    
+    // 지원하는 파일 형식 정의
+    private let supportedFileTypes: [UTType] = [
+        .pdf,                    // PDF 파일
+        UTType("com.microsoft.word.doc")!,    // Word 문서
+        UTType("org.openxmlformats.wordprocessingml.document")!,  // Word 문서 (docx)
+        UTType("com.microsoft.powerpoint.ppt")!,  // PowerPoint 프레젠테이션
+        UTType("org.openxmlformats.presentationml.presentation")!,  // PowerPoint 프레젠테이션 (pptx)
+        UTType("com.microsoft.excel.xls")!,  // Excel 스프레드시트
+        UTType("org.openxmlformats.spreadsheetml.sheet")!  // Excel 스프레드시트 (xlsx)
+    ]
     
     // MARK: - Public Methods
     func openFilePicker(
-        fileTypes: [UTType] = [.item],
+        fileTypes: [UTType]? = nil,
         allowsMultipleSelection: Bool = true
     ) {
         DispatchQueue.main.async {
-            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: fileTypes)
+            let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: fileTypes ?? self.supportedFileTypes)
             documentPicker.delegate = self
             documentPicker.allowsMultipleSelection = allowsMultipleSelection
             
@@ -47,7 +67,6 @@ class FileUpLoadFunction: NSObject, ObservableObject {
 // MARK: - UIDocumentPickerDelegate
 extension FileUpLoadFunction: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        // 즉시 picker를 닫고 처리 시작
         controller.dismiss(animated: true) { [weak self] in
             self?.processFiles(urls)
         }
@@ -59,10 +78,8 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
     
     // MARK: - Private Methods
     private func processFiles(_ urls: [URL]) {
-        // 이전 작업이 있다면 취소
         processingTask?.cancel()
         
-        // 초기 상태 설정
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             self.totalFiles = urls.count
@@ -71,39 +88,67 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
             self.uploadProgress = 0.0
         }
         
-        // 새로운 처리 작업 시작
         processingTask = Task { [weak self] in
             guard let self = self else { return }
             
             for (index, url) in urls.enumerated() {
                 if Task.isCancelled { break }
                 
-                // 파일 정보 가져오기
-                let fileSize = url.fileSize ?? 0
-                
-                await MainActor.run {
-                    self.currentProcessingFileName = url.lastPathComponent
-                    
-                    // 새 파일 항목 생성 및 추가
-                    let newFile = UploadedFile(
-                        url: url,
-                        name: url.lastPathComponent,
-                        size: fileSize,
-                        date: Date(),
-                        fileExtension: url.pathExtension.lowercased()
-                    )
-                    
-                    // UI 업데이트
-                    self.uploadedFiles.insert(newFile, at: 0)
-                    self.processedFilesCount = index + 1
-                    self.uploadProgress = Double(self.processedFilesCount) / Double(self.totalFiles)
+                // 보안 스코프 리소스 접근 시작
+                guard url.startAccessingSecurityScopedResource() else {
+                    print("Failed to access security scoped resource: \(url.lastPathComponent)")
+                    continue
                 }
                 
-                // 각 파일 처리 사이에 짧은 지연을 주어 UI가 부드럽게 업데이트되도록 함
+                defer {
+                    url.stopAccessingSecurityScopedResource()
+                }
+                
+                // File Coordinator를 사용하여 파일 접근
+                var error: NSError?
+                fileCoordinator.coordinate(readingItemAt: url, options: .immediatelyAvailableMetadataOnly, error: &error) { [weak self] url in
+                    guard let self = self else { return }
+                    
+                    do {
+                        // 파일 정보 가져오기
+                        let fileSize = url.fileSize ?? 0
+                        
+                        // 북마크 데이터 생성
+                        let bookmarkData = try url.bookmarkData(
+                            options: [],
+                            includingResourceValuesForKeys: [.fileSizeKey],
+                            relativeTo: nil
+                        )
+                        
+                        Task { @MainActor in
+                            self.currentProcessingFileName = url.lastPathComponent
+                            
+                            // 새 파일 항목 생성 및 추가
+                            let newFile = UploadedFile(
+                                bookmarkData: bookmarkData,
+                                name: url.lastPathComponent,
+                                size: fileSize,
+                                date: Date(),
+                                fileExtension: url.pathExtension.lowercased()
+                            )
+                            
+                            // UI 업데이트
+                            self.uploadedFiles.insert(newFile, at: 0)
+                            self.processedFilesCount = index + 1
+                            self.uploadProgress = Double(self.processedFilesCount) / Double(self.totalFiles)
+                        }
+                    } catch {
+                        print("Error creating bookmark: \(error.localizedDescription)")
+                    }
+                }
+                
+                if let error = error {
+                    print("File coordination error: \(error.localizedDescription)")
+                }
+                
                 try? await Task.sleep(nanoseconds: 50_000_000) // 0.05초
             }
             
-            // 모든 처리 완료
             await MainActor.run {
                 self.isLoading = false
                 self.currentProcessingFileName = ""
