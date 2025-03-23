@@ -19,6 +19,7 @@
 		81DAB9792D8D0BB500027CA6 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 81DAB9782D8D0BB500027CA6 /* ReadMe.md */; };
 		81DAB9852D8D446900027CA6 /* FileUpLoadFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */; };
 		81DAB9872D8D65A400027CA6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9862D8D659B00027CA6 /* Filter.swift */; };
+		81DAB98A2D8FB45200027CA6 /* CoreHwp in Frameworks */ = {isa = PBXBuildFile; productRef = 81DAB9892D8FB45200027CA6 /* CoreHwp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81DAB98A2D8FB45200027CA6 /* CoreHwp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +114,7 @@
 			);
 			name = "File Organizer";
 			packageProductDependencies = (
+				81DAB9892D8FB45200027CA6 /* CoreHwp */,
 			);
 			productName = "File Organizer";
 			productReference = 81DAB94B2D8CFE7300027CA6 /* File Organizer.app */;
@@ -141,6 +144,9 @@
 			);
 			mainGroup = 81DAB9422D8CFE7300027CA6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				81DAB9882D8FB45200027CA6 /* XCRemoteSwiftPackageReference "hwp-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 81DAB94C2D8CFE7300027CA6 /* Products */;
 			projectDirPath = "";
@@ -402,6 +408,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		81DAB9882D8FB45200027CA6 /* XCRemoteSwiftPackageReference "hwp-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sboh1214/hwp-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.14.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		81DAB9892D8FB45200027CA6 /* CoreHwp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81DAB9882D8FB45200027CA6 /* XCRemoteSwiftPackageReference "hwp-swift" */;
+			productName = CoreHwp;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 81DAB9432D8CFE7300027CA6 /* Project object */;
 }
