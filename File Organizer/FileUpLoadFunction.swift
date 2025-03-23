@@ -43,7 +43,10 @@ class FileUpLoadFunction: NSObject, ObservableObject {
         UTType("com.microsoft.powerpoint.ppt")!,  // PowerPoint 프레젠테이션
         UTType("org.openxmlformats.presentationml.presentation")!,  // PowerPoint 프레젠테이션 (pptx)
         UTType("com.microsoft.excel.xls")!,  // Excel 스프레드시트
-        UTType("org.openxmlformats.spreadsheetml.sheet")!  // Excel 스프레드시트 (xlsx)
+        UTType("org.openxmlformats.spreadsheetml.sheet")!,  // Excel 스프레드시트 (xlsx)
+        UTType("org.hancom.hwp")!,  // 한글 문서 (hwp)
+        UTType("org.hancom.hwpx")!  // 한글 문서 (hwpx)
+
     ]
     
     // MARK: - Public Methods
