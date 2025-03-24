@@ -20,6 +20,7 @@
 		81DAB9852D8D446900027CA6 /* FileUpLoadFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */; };
 		81DAB9872D8D65A400027CA6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9862D8D659B00027CA6 /* Filter.swift */; };
 		81DAB98A2D8FB45200027CA6 /* CoreHwp in Frameworks */ = {isa = PBXBuildFile; productRef = 81DAB9892D8FB45200027CA6 /* CoreHwp */; };
+		81DAB98C2D9105AD00027CA6 /* AllShowFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		81DAB9782D8D0BB500027CA6 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUpLoadFunction.swift; sourceTree = "<group>"; };
 		81DAB9862D8D659B00027CA6 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllShowFileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 		81DAB9632D8CFE7A00027CA6 /* File Organizer */ = {
 			isa = PBXGroup;
 			children = (
+				81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */,
 				81DAB9862D8D659B00027CA6 /* Filter.swift */,
 				81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */,
 				81DAB9712D8D02C200027CA6 /* SettingsView.swift */,
@@ -176,6 +179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81DAB98C2D9105AD00027CA6 /* AllShowFileView.swift in Sources */,
 				81DAB9702D8D02B000027CA6 /* FileView.swift in Sources */,
 				81DAB96E2D8D005700027CA6 /* RecentUpLoadView.swift in Sources */,
 				81DAB9852D8D446900027CA6 /* FileUpLoadFunction.swift in Sources */,
