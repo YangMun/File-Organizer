@@ -4,15 +4,39 @@ struct AllShowFileView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var fileUploader: FileUpLoadFunction
     
+    // 중복 파일 제거하고 최신 파일만 보여주는 계산 속성 수정
+    private var uniqueFiles: [UploadedFile] {
+        // 먼저 uploadedFiles를 날짜순으로 정렬
+        let sortedFiles = fileUploader.uploadedFiles.sorted { $0.date > $1.date }
+        
+        var uniqueDict = [String: UploadedFile]()
+        var seenOrder = [String]()
+        
+        // 정렬된 파일들을 처리 (최신 파일부터)
+        for file in sortedFiles {
+            let key = file.name
+            if uniqueDict[key] == nil {
+                // 새 파일은 항상 맨 앞에 추가
+                seenOrder.append(key)
+            }
+            // 항상 최신 버전으로 업데이트
+            uniqueDict[key] = file
+        }
+        
+        return seenOrder.compactMap { uniqueDict[$0] }
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    ForEach(fileUploader.uploadedFiles) { file in
+                    // uploadedFiles 대신 uniqueFiles 사용
+                    ForEach(uniqueFiles) { file in
                         FileRowView(file: file)
                             .padding(.vertical, 12)
                         
-                        if file.id != fileUploader.uploadedFiles.last?.id {
+                        // 마지막 항목 체크도 uniqueFiles 사용
+                        if file.id != uniqueFiles.last?.id {
                             Divider()
                                 .padding(.horizontal)
                         }
@@ -51,7 +75,7 @@ struct FileRowView: View {
                     .font(.system(size: 17))
                     .lineLimit(1)
                 
-                Text("\(formatFileSize(file.size)) • \(formatDate(file.date))")
+                Text(formatFileSize(file.size))
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
             }
@@ -87,12 +111,5 @@ struct FileRowView: View {
         formatter.allowedUnits = [.useMB, .useKB]
         formatter.countStyle = .file
         return formatter.string(fromByteCount: size)
-    }
-    
-    // 날짜 포맷
-    private func formatDate(_ date: Date) -> String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        return formatter.localizedString(for: date, relativeTo: Date())
     }
 }
