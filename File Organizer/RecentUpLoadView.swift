@@ -4,6 +4,28 @@ struct RecentUpLoadView: View {
     @ObservedObject var fileUploader: FileUpLoadFunction
     @State private var showAllFiles = false
     
+    // 중복 파일 제거하고 최신 파일만 보여주는 계산 속성 수정
+    private var uniqueFiles: [UploadedFile] {
+        // 먼저 uploadedFiles를 날짜순으로 정렬
+        let sortedFiles = fileUploader.uploadedFiles.sorted { $0.date > $1.date }
+        
+        var uniqueDict = [String: UploadedFile]()
+        var seenOrder = [String]()
+        
+        // 정렬된 파일들을 처리 (최신 파일부터)
+        for file in sortedFiles {
+            let key = file.name
+            if uniqueDict[key] == nil {
+                // 새 파일은 항상 맨 앞에 추가
+                seenOrder.append(key)
+            }
+            // 항상 최신 버전으로 업데이트
+            uniqueDict[key] = file
+        }
+        
+        return seenOrder.compactMap { uniqueDict[$0] }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
@@ -26,7 +48,8 @@ struct RecentUpLoadView: View {
             // 스크롤 영역
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    ForEach(fileUploader.uploadedFiles) { file in
+                    // uploadedFiles 대신 uniqueFiles 사용
+                    ForEach(uniqueFiles) { file in
                         HStack {
                             // 파일 타입에 따른 이미지 설정
                             Image(getFileImage(for: file.fileExtension))
@@ -36,7 +59,7 @@ struct RecentUpLoadView: View {
                             VStack(alignment: .leading) {
                                 Text(file.name)
                                     .font(.system(size: 16))
-                                Text("\(formatFileSize(file.size)) • \(formatDate(file.date))")
+                                Text(formatFileSize(file.size))
                                     .font(.system(size: 12))
                                     .foregroundColor(.gray)
                             }
@@ -49,8 +72,8 @@ struct RecentUpLoadView: View {
                         .padding(.vertical, 8)
                         .padding(.horizontal)
                         
-                        // 마지막 항목이 아닌 경우에만 구분선 추가
-                        if file.id != fileUploader.uploadedFiles.last?.id {
+                        // 마지막 항목 체크도 uniqueFiles 사용
+                        if file.id != uniqueFiles.last?.id {
                             Divider()
                                 .padding(.horizontal)
                         }
@@ -95,11 +118,30 @@ struct RecentUpLoadView: View {
         return formatter.string(fromByteCount: size)
     }
     
-    // 날짜 포맷
+    // 날짜 포맷 함수 수정
     private func formatDate(_ date: Date) -> String {
-        let formatter = RelativeDateTimeFormatter()
+        let now = Date()
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.minute, .hour, .day], from: date, to: now)
+        
+        if let minutes = components.minute {
+            if minutes < 1 {
+                return "방금 전"
+            }
+            if minutes < 60 {
+                return "\(minutes)분 전"
+            }
+        }
+        
+        if let hours = components.hour, hours < 24 {
+            return "\(hours)시간 전"
+        }
+        
+        // 24시간 이상 지난 경우 날짜와 시간 표시
+        let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
-        return formatter.localizedString(for: date, relativeTo: Date())
+        formatter.dateFormat = "M월 d일 HH:mm"
+        return formatter.string(from: date)
     }
 }
 

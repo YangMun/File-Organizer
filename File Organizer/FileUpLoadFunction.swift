@@ -121,11 +121,13 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
                         Task { @MainActor in
                             self.currentProcessingFileName = url.lastPathComponent
                             
+                            let currentDate = Date()
+                            
                             let newFile = UploadedFile(
                                 bookmarkData: bookmarkData,
                                 name: url.lastPathComponent,
                                 size: fileSize,
-                                date: Date(),
+                                date: currentDate,
                                 fileExtension: url.pathExtension.lowercased()
                             )
                             
