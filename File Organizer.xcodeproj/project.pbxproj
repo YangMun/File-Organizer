@@ -21,6 +21,11 @@
 		81DAB9872D8D65A400027CA6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9862D8D659B00027CA6 /* Filter.swift */; };
 		81DAB98A2D8FB45200027CA6 /* CoreHwp in Frameworks */ = {isa = PBXBuildFile; productRef = 81DAB9892D8FB45200027CA6 /* CoreHwp */; };
 		81DAB98C2D9105AD00027CA6 /* AllShowFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */; };
+		81DAB99A2D91127600027CA6 /* FileOrganizer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9972D91127600027CA6 /* FileOrganizer.xcdatamodeld */; };
+		81DAB9A12D9115E600027CA6 /* FileEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A02D9115E600027CA6 /* FileEntity+CoreDataProperties.swift */; };
+		81DAB9A22D9115E600027CA6 /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB99F2D9115E600027CA6 /* FileEntity+CoreDataClass.swift */; };
+		81DAB9A42D91176500027CA6 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A32D91176300027CA6 /* PersistenceController.swift */; };
+		81DAB9A62D91179300027CA6 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A52D91179200027CA6 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,11 @@
 		81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUpLoadFunction.swift; sourceTree = "<group>"; };
 		81DAB9862D8D659B00027CA6 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllShowFileView.swift; sourceTree = "<group>"; };
+		81DAB9992D91127600027CA6 /* FileOrganizer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FileOrganizer.xcdatamodel; sourceTree = "<group>"; };
+		81DAB99F2D9115E600027CA6 /* FileEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		81DAB9A02D9115E600027CA6 /* FileEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		81DAB9A32D91176300027CA6 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		81DAB9A52D91179200027CA6 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +67,7 @@
 		81DAB9422D8CFE7300027CA6 = {
 			isa = PBXGroup;
 			children = (
+				81DAB9982D91127600027CA6 /* Models */,
 				81DAB9632D8CFE7A00027CA6 /* File Organizer */,
 				81DAB94C2D8CFE7300027CA6 /* Products */,
 				81DAB9782D8D0BB500027CA6 /* ReadMe.md */,
@@ -98,6 +109,18 @@
 				81DAB9622D8CFE7A00027CA6 /* File_OrganizerApp.swift */,
 			);
 			path = "File Organizer";
+			sourceTree = "<group>";
+		};
+		81DAB9982D91127600027CA6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB9A52D91179200027CA6 /* CoreDataManager.swift */,
+				81DAB9A32D91176300027CA6 /* PersistenceController.swift */,
+				81DAB9972D91127600027CA6 /* FileOrganizer.xcdatamodeld */,
+				81DAB99F2D9115E600027CA6 /* FileEntity+CoreDataClass.swift */,
+				81DAB9A02D9115E600027CA6 /* FileEntity+CoreDataProperties.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,6 +211,11 @@
 				81DAB9722D8D02C300027CA6 /* SettingsView.swift in Sources */,
 				81DAB9652D8CFE7A00027CA6 /* File_OrganizerApp.swift in Sources */,
 				81DAB96C2D8D003A00027CA6 /* FileUpLoadView.swift in Sources */,
+				81DAB99A2D91127600027CA6 /* FileOrganizer.xcdatamodeld in Sources */,
+				81DAB9A42D91176500027CA6 /* PersistenceController.swift in Sources */,
+				81DAB9A12D9115E600027CA6 /* FileEntity+CoreDataProperties.swift in Sources */,
+				81DAB9A62D91179300027CA6 /* CoreDataManager.swift in Sources */,
+				81DAB9A22D9115E600027CA6 /* FileEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +459,19 @@
 			productName = CoreHwp;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		81DAB9972D91127600027CA6 /* FileOrganizer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				81DAB9992D91127600027CA6 /* FileOrganizer.xcdatamodel */,
+			);
+			currentVersion = 81DAB9992D91127600027CA6 /* FileOrganizer.xcdatamodel */;
+			path = FileOrganizer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 81DAB9432D8CFE7300027CA6 /* Project object */;
 }

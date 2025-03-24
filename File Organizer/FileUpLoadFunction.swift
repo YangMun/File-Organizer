@@ -97,7 +97,6 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
             for (index, url) in urls.enumerated() {
                 if Task.isCancelled { break }
                 
-                // 보안 스코프 리소스 접근 시작
                 guard url.startAccessingSecurityScopedResource() else {
                     print("Failed to access security scoped resource: \(url.lastPathComponent)")
                     continue
@@ -107,16 +106,12 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
                     url.stopAccessingSecurityScopedResource()
                 }
                 
-                // File Coordinator를 사용하여 파일 접근
                 var error: NSError?
                 fileCoordinator.coordinate(readingItemAt: url, options: .immediatelyAvailableMetadataOnly, error: &error) { [weak self] url in
                     guard let self = self else { return }
                     
                     do {
-                        // 파일 정보 가져오기
                         let fileSize = url.fileSize ?? 0
-                        
-                        // 북마크 데이터 생성
                         let bookmarkData = try url.bookmarkData(
                             options: [],
                             includingResourceValuesForKeys: [.fileSizeKey],
@@ -126,7 +121,6 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
                         Task { @MainActor in
                             self.currentProcessingFileName = url.lastPathComponent
                             
-                            // 새 파일 항목 생성 및 추가
                             let newFile = UploadedFile(
                                 bookmarkData: bookmarkData,
                                 name: url.lastPathComponent,
@@ -135,7 +129,9 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
                                 fileExtension: url.pathExtension.lowercased()
                             )
                             
-                            // UI 업데이트
+                            // Core Data에 저장
+                            CoreDataManager.shared.saveFile(newFile)
+                            
                             self.uploadedFiles.insert(newFile, at: 0)
                             self.processedFilesCount = index + 1
                             self.uploadProgress = Double(self.processedFilesCount) / Double(self.totalFiles)
