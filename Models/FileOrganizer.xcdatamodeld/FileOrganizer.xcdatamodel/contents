@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24D81" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="FileEntity" representedClassName="FileEntity" syncable="YES">
+        <attribute name="bookmarkData" attributeType="Binary"/>
+        <attribute name="dateUploaded" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="fileExtension" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO" spotlightIndexingEnabled="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="path" optional="YES" attributeType="String"/>
+        <attribute name="size" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+</model>
