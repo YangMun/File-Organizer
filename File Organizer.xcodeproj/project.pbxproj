@@ -26,6 +26,8 @@
 		81DAB9A22D9115E600027CA6 /* FileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB99F2D9115E600027CA6 /* FileEntity+CoreDataClass.swift */; };
 		81DAB9A42D91176500027CA6 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A32D91176300027CA6 /* PersistenceController.swift */; };
 		81DAB9A62D91179300027CA6 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A52D91179200027CA6 /* CoreDataManager.swift */; };
+		81DAB9A82D9136FF00027CA6 /* ShowFileFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A72D9136EE00027CA6 /* ShowFileFolder.swift */; };
+		81DAB9AA2D913D8600027CA6 /* FileDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A92D913D7D00027CA6 /* FileDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		81DAB9A02D9115E600027CA6 /* FileEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		81DAB9A32D91176300027CA6 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		81DAB9A52D91179200027CA6 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		81DAB9A72D9136EE00027CA6 /* ShowFileFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFileFolder.swift; sourceTree = "<group>"; };
+		81DAB9A92D913D7D00027CA6 /* FileDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +98,8 @@
 		81DAB9632D8CFE7A00027CA6 /* File Organizer */ = {
 			isa = PBXGroup;
 			children = (
+				81DAB9A92D913D7D00027CA6 /* FileDetailView.swift */,
+				81DAB9A72D9136EE00027CA6 /* ShowFileFolder.swift */,
 				81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */,
 				81DAB9862D8D659B00027CA6 /* Filter.swift */,
 				81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */,
@@ -214,6 +220,8 @@
 				81DAB99A2D91127600027CA6 /* FileOrganizer.xcdatamodeld in Sources */,
 				81DAB9A42D91176500027CA6 /* PersistenceController.swift in Sources */,
 				81DAB9A12D9115E600027CA6 /* FileEntity+CoreDataProperties.swift in Sources */,
+				81DAB9A82D9136FF00027CA6 /* ShowFileFolder.swift in Sources */,
+				81DAB9AA2D913D8600027CA6 /* FileDetailView.swift in Sources */,
 				81DAB9A62D91179300027CA6 /* CoreDataManager.swift in Sources */,
 				81DAB9A22D9115E600027CA6 /* FileEntity+CoreDataClass.swift in Sources */,
 			);
