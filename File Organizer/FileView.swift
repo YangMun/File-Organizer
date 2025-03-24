@@ -21,43 +21,35 @@ struct FileView: View {
     ]
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(fileTypes) { item in
-                    Button(action: {
-                        // 각 파일 타입 선택 시 동작
-                    }) {
-                        VStack {
-                            Image(item.imageName)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 40, height: 40)
-                                .padding(.bottom, 8)
-                            
-                            Text(item.title)
-                                .font(.system(size: 14))
-                                .foregroundColor(.black)
+        NavigationView {
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(fileTypes) { item in
+                        NavigationLink(destination: ShowFileFolder(fileType: item.title)) {
+                            VStack {
+                                Image(item.imageName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 40, height: 40)
+                                    .padding(.bottom, 8)
+                                
+                                Text(item.title)
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.black)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 120)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                         }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 120)
-                        .background(Color.white)
-                        .cornerRadius(12)
-                        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
                     }
                 }
+                .padding()
             }
-            .padding()
+            .background(Color(UIColor.systemGray6))
+            
         }
-        .background(Color(UIColor.systemGray6))
-        .navigationTitle("File Organizer")
-        .navigationBarItems(trailing: 
-            Button(action: {
-                // 새로고침 동작
-            }) {
-                Image(systemName: "arrow.clockwise")
-                    .foregroundColor(.black)
-            }
-        )
     }
 }
 
