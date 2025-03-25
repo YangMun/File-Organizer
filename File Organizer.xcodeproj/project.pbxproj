@@ -96,21 +96,12 @@
 		81DAB9632D8CFE7A00027CA6 /* File Organizer */ = {
 			isa = PBXGroup;
 			children = (
-				81DAB9AB2D92642200027CA6 /* ColorTheme.swift */,
-				81DAB9A92D913D7D00027CA6 /* FileDetailView.swift */,
-				81DAB9A72D9136EE00027CA6 /* ShowFileFolder.swift */,
-				81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */,
-				81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */,
-				81DAB9712D8D02C200027CA6 /* SettingsView.swift */,
-				81DAB96F2D8D02AE00027CA6 /* FileView.swift */,
-				81DAB96D2D8D004C00027CA6 /* RecentUpLoadView.swift */,
-				81DAB96B2D8D002E00027CA6 /* FileUpLoadView.swift */,
-				81DAB9692D8D001900027CA6 /* MainView.swift */,
+				81DAB9AE2D9284FD00027CA6 /* App */,
+				81DAB9AF2D92851700027CA6 /* Core */,
+				81DAB9AD2D9284BD00027CA6 /* utils */,
 				81DAB9682D8CFE8500027CA6 /* File-Organizer-Info.plist */,
 				81DAB95E2D8CFE7A00027CA6 /* Preview Content */,
 				81DAB95F2D8CFE7A00027CA6 /* Assets.xcassets */,
-				81DAB9612D8CFE7A00027CA6 /* File_Organizer.entitlements */,
-				81DAB9622D8CFE7A00027CA6 /* File_OrganizerApp.swift */,
 			);
 			path = "File Organizer";
 			sourceTree = "<group>";
@@ -125,6 +116,79 @@
 				81DAB9A02D9115E600027CA6 /* FileEntity+CoreDataProperties.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		81DAB9AD2D9284BD00027CA6 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB9AB2D92642200027CA6 /* ColorTheme.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
+		81DAB9AE2D9284FD00027CA6 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB9612D8CFE7A00027CA6 /* File_Organizer.entitlements */,
+				81DAB9622D8CFE7A00027CA6 /* File_OrganizerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		81DAB9AF2D92851700027CA6 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB9B12D92857F00027CA6 /* Files */,
+				81DAB9B42D9285B200027CA6 /* Upload */,
+				81DAB9B02D92852500027CA6 /* Main */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		81DAB9B02D92852500027CA6 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB9692D8D001900027CA6 /* MainView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		81DAB9B12D92857F00027CA6 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB9B22D92859400027CA6 /* Views */,
+				81DAB9B32D92859F00027CA6 /* Functions */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		81DAB9B22D92859400027CA6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB9A92D913D7D00027CA6 /* FileDetailView.swift */,
+				81DAB9A72D9136EE00027CA6 /* ShowFileFolder.swift */,
+				81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */,
+				81DAB9712D8D02C200027CA6 /* SettingsView.swift */,
+				81DAB96F2D8D02AE00027CA6 /* FileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		81DAB9B32D92859F00027CA6 /* Functions */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */,
+			);
+			path = Functions;
+			sourceTree = "<group>";
+		};
+		81DAB9B42D9285B200027CA6 /* Upload */ = {
+			isa = PBXGroup;
+			children = (
+				81DAB96D2D8D004C00027CA6 /* RecentUpLoadView.swift */,
+				81DAB96B2D8D002E00027CA6 /* FileUpLoadView.swift */,
+			);
+			path = Upload;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
