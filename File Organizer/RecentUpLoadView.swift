@@ -3,6 +3,7 @@ import SwiftUI
 struct RecentUpLoadView: View {
     @ObservedObject var fileUploader: FileUpLoadFunction
     @State private var showAllFiles = false
+    @Environment(\.colorScheme) var colorScheme
     
     // 중복 파일 제거하고 최신 파일만 보여주는 계산 속성 수정
     private var uniqueFiles: [UploadedFile] {
@@ -32,6 +33,7 @@ struct RecentUpLoadView: View {
                 Text("최근 업로드")
                     .font(.title3)
                     .fontWeight(.bold)
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
                 
                 Spacer()
                 
@@ -59,15 +61,14 @@ struct RecentUpLoadView: View {
                             VStack(alignment: .leading) {
                                 Text(file.name)
                                     .font(.system(size: 16))
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
                                 Text(formatFileSize(file.size))
                                     .font(.system(size: 12))
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                             }
                             
                             Spacer()
                             
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
                         }
                         .padding(.vertical, 8)
                         .padding(.horizontal)
@@ -76,16 +77,18 @@ struct RecentUpLoadView: View {
                         if file.id != uniqueFiles.last?.id {
                             Divider()
                                 .padding(.horizontal)
+                                .background(colorScheme == .dark ? Color.gray.opacity(0.3) : Color.gray.opacity(0.2))
                         }
                     }
                 }
             }
             .frame(height: 300) // 고정된 높이 설정
         }
+        .padding(16)
         .frame(maxWidth: .infinity)
-        .background(Color.white)
+        .background(colorScheme == .dark ? Color(UIColor.systemGray5) : .white)
         .cornerRadius(12)
-        .shadow(radius: 2)
+        .shadow(color: colorScheme == .dark ? .black.opacity(0.3) : .black.opacity(0.1), radius: 5)
         .sheet(isPresented: $showAllFiles) {
             AllShowFileView(fileUploader: fileUploader)
                 .presentationBackground(.ultraThinMaterial)

@@ -7,6 +7,8 @@ struct FileTypeItem: Identifiable {
 }
 
 struct FileView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -35,20 +37,24 @@ struct FileView: View {
                                 
                                 Text(item.title)
                                     .font(.system(size: 14))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
                             }
                             .frame(maxWidth: .infinity)
                             .frame(height: 120)
-                            .background(Color.white)
+                            .background(colorScheme == .dark ? Color(UIColor.systemGray5) : .white)
                             .cornerRadius(12)
-                            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                            .shadow(
+                                color: colorScheme == .dark ? .black.opacity(0.3) : .black.opacity(0.1),
+                                radius: 5,
+                                x: 0,
+                                y: 2
+                            )
                         }
                     }
                 }
                 .padding()
             }
-            .background(Color(UIColor.systemGray6))
-            
+            .background(colorScheme == .dark ? Color(UIColor.systemGray6).opacity(0.8) : Color(UIColor.systemGray6))
         }
     }
 }
