@@ -9,6 +9,7 @@ struct FileDetailView: View {
     @State private var showError = false
     @State private var errorMessage = ""
     @State private var interactionController: UIDocumentInteractionController?
+    @Environment(\.colorScheme) var colorScheme
     
     private func loadDocument() {
         guard let bookmarkData = document.bookmarkData else {
@@ -57,36 +58,70 @@ struct FileDetailView: View {
         interactionController = controller
     }
     
+    // 파일 타입에 따른 이미지 이름 반환
+    private func getFileImage(fileExtension: String?) -> String {
+        guard let ext = fileExtension?.lowercased() else { return "PDF" }
+        
+        switch ext {
+        case "pdf":
+            return "PDF"
+        case "doc", "docx":
+            return "Word"
+        case "hwp":
+            return "HWP"
+        case "xls", "xlsx":
+            return "Excel"
+        case "ppt", "pptx":
+            return "PPT"
+        default:
+            return "PDF"
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 20) {
             // 파일 정보 표시
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    Image(systemName: "doc.fill")
-                        .font(.largeTitle)
-                        .foregroundColor(.blue)
+                    // systemName 이미지를 Assets의 실제 파일 타입 이미지로 변경
+                    Image(getFileImage(fileExtension: document.fileExtension))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40)
                     
                     VStack(alignment: .leading) {
                         Text(document.name ?? "Unknown")
                             .font(.headline)
+                            .foregroundColor(colorScheme == .dark ? .white : .black)
                         Text(document.fileExtension?.uppercased() ?? "")
                             .font(.subheadline)
-                            .foregroundColor(.gray)
+                            .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                     }
                 }
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    DetailRow(title: "파일 크기", value: ByteCountFormatter.string(fromByteCount: Int64(document.size), countStyle: .file))
-                    DetailRow(title: "업로드 날짜", value: (document.dateUploaded ?? Date()).formatted())
+                    DetailRow(
+                        title: "파일 크기",
+                        value: ByteCountFormatter.string(fromByteCount: Int64(document.size), countStyle: .file),
+                        colorScheme: colorScheme
+                    )
+                    DetailRow(
+                        title: "업로드 날짜",
+                        value: (document.dateUploaded ?? Date()).formatted(),
+                        colorScheme: colorScheme
+                    )
                 }
                 .padding(.top)
             }
             .padding()
-            .background(Color(.systemBackground))
+            .background(colorScheme == .dark ? Color(UIColor.systemGray5) : Color(.systemBackground))
             .cornerRadius(12)
-            .shadow(color: Color.black.opacity(0.1), radius: 5)
+            .shadow(
+                color: colorScheme == .dark ? .black.opacity(0.3) : .black.opacity(0.1),
+                radius: 5
+            )
             
-            VStack(spacing: 12) {  // spacing 추가
+            VStack(spacing: 12) {
                 // 파일 열기 버튼
                 Button(action: {
                     loadDocument()
@@ -105,7 +140,7 @@ struct FileDetailView: View {
                 if document.fileExtension?.lowercased() == "hwp" {
                     Text("한컴오피스 Viewer 프로그램이 필요합니다.")
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                         .padding(.bottom, 4)
                 }
             }
@@ -115,7 +150,7 @@ struct FileDetailView: View {
         }
         .padding()
         .navigationBarTitleDisplayMode(.inline)
-        .background(Color(.systemGroupedBackground))
+        .background(colorScheme == .dark ? Color(UIColor.black) : Color(.systemGroupedBackground))
         .alert("오류", isPresented: $showError) {
             Button("확인", role: .cancel) {}
         } message: {
@@ -132,13 +167,15 @@ struct FileDetailView: View {
 struct DetailRow: View {
     let title: String
     let value: String
+    let colorScheme: ColorScheme
     
     var body: some View {
         HStack {
             Text(title)
-                .foregroundColor(.gray)
+                .foregroundColor(colorScheme == .dark ? .gray : .secondary)
             Spacer()
             Text(value)
+                .foregroundColor(colorScheme == .dark ? .white : .black)
         }
     }
 }

@@ -8,7 +8,7 @@ struct MainView: View {
         TabView(selection: $selectedTab) {
             // 홈 탭
             ZStack {
-                Color(UIColor.systemGray6)
+                Color(.systemGroupedBackground)
                     .ignoresSafeArea()
                 
                 VStack {
@@ -43,11 +43,16 @@ struct MainView: View {
                 }
                 .tag(2)
         }
+        .tint(.blue)
         .onAppear {
             // TabBar 스타일 설정
             let appearance = UITabBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
+            appearance.configureWithDefaultBackground()
+            
+            // 선택되지 않은 아이템 색상 설정
+            let unselectedColor = UIColor.gray
+            appearance.stackedLayoutAppearance.normal.iconColor = unselectedColor
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: unselectedColor]
             
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
