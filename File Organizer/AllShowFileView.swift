@@ -81,9 +81,6 @@ struct FileRowView: View {
             }
             
             Spacer()
-            
-            Image(systemName: "chevron.right")
-                .foregroundColor(.gray)
         }
     }
     

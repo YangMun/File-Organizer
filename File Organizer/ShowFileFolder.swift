@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ShowFileFolder: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var selectedDocuments: [FileEntity] = []
     @State private var isSearching: Bool = false
     @State private var searchText: String = ""
@@ -46,12 +47,12 @@ struct ShowFileFolder: View {
     var body: some View {
         VStack(spacing: 0) {
             // 검색 바
-            SearchBar(text: $searchText, isSearching: $isSearching)
+            SearchBar(text: $searchText, isSearching: $isSearching, colorScheme: colorScheme)
                 .padding(.horizontal)
                 .padding(.top)
             
             if filteredDocuments.isEmpty {
-                EmptyStateView()
+                EmptyStateView(colorScheme: colorScheme)
             } else {
                 ScrollView {
                     LazyVStack(spacing: 12) {
@@ -62,7 +63,8 @@ struct ShowFileFolder: View {
                                 deletedFileName: $deletedFileName,
                                 selectedDocuments: $selectedDocuments,
                                 isEditMode: $isEditMode,
-                                selectedItems: $selectedItems
+                                selectedItems: $selectedItems,
+                                colorScheme: colorScheme
                             )
                         }
                     }
@@ -75,14 +77,13 @@ struct ShowFileFolder: View {
                 HStack {
                     Button(action: {
                         if selectedItems.isEmpty {
-                            // 전체 선택
                             selectedItems = Set(filteredDocuments.compactMap { $0.id })
                         } else {
-                            // 선택 해제
                             selectedItems.removeAll()
                         }
                     }) {
                         Text(selectedItems.isEmpty ? "전체 선택" : "선택 해제")
+                            .foregroundColor(.blue)
                     }
                     .padding()
                     
@@ -97,9 +98,10 @@ struct ShowFileFolder: View {
                     .padding()
                     .disabled(selectedItems.isEmpty)
                 }
-                .background(Color(.systemBackground))
+                .background(colorScheme == .dark ? Color(UIColor.systemGray5) : Color(.systemBackground))
             }
         }
+        .background(colorScheme == .dark ? Color.black : Color(.systemGroupedBackground))
         .navigationTitle(categoryType)
         .navigationBarItems(trailing: editButton)
         .onAppear {
@@ -152,6 +154,7 @@ struct ShowFileFolder: View {
 struct SearchBar: View {
     @Binding var text: String
     @Binding var isSearching: Bool
+    let colorScheme: ColorScheme
     
     var body: some View {
         HStack {
@@ -160,7 +163,7 @@ struct SearchBar: View {
                     .foregroundColor(.gray)
                 
                 TextField("파일 검색", text: $text)
-                    .foregroundColor(.primary)
+                    .foregroundColor(colorScheme == .dark ? .white : .primary)
                 
                 if !text.isEmpty {
                     Button(action: {
@@ -172,7 +175,7 @@ struct SearchBar: View {
                 }
             }
             .padding(8)
-            .background(Color(.systemGray6))
+            .background(colorScheme == .dark ? Color(UIColor.systemGray6) : Color(.systemGray6))
             .cornerRadius(10)
         }
     }
@@ -186,11 +189,31 @@ struct DocumentCard: View {
     @Binding var selectedDocuments: [FileEntity]
     @Binding var isEditMode: Bool
     @Binding var selectedItems: Set<UUID>
+    let colorScheme: ColorScheme
+    
+    // 파일 타입에 따른 이미지 이름 반환
+    private func getFileImage(fileExtension: String?) -> String {
+        guard let ext = fileExtension?.lowercased() else { return "PDF" }
+        
+        switch ext {
+        case "pdf":
+            return "PDF"
+        case "doc", "docx":
+            return "Word"
+        case "hwp":
+            return "HWP"
+        case "xls", "xlsx":
+            return "Excel"
+        case "ppt", "pptx":
+            return "PPT"
+        default:
+            return "PDF"
+        }
+    }
     
     var body: some View {
         HStack {
             if isEditMode {
-                // 체크박스
                 Image(systemName: selectedItems.contains(document.id!) ? "checkmark.circle.fill" : "circle")
                     .foregroundColor(selectedItems.contains(document.id!) ? .blue : .gray)
                     .imageScale(.large)
@@ -200,45 +223,50 @@ struct DocumentCard: View {
             NavigationLink(destination: FileDetailView(document: document)) {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        // 파일 타입 아이콘
-                        Image(systemName: "doc.fill")
-                            .font(.title2)
-                            .foregroundColor(.blue)
+                        // 파일 타입 아이콘을 Assets의 이미지로 변경
+                        Image(getFileImage(fileExtension: document.fileExtension))
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text(document.name ?? "Unknown")
                                 .font(.headline)
                                 .lineLimit(1)
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                             
                             Text(document.fileExtension?.uppercased() ?? "")
                                 .font(.caption)
-                                .foregroundColor(.gray)
+                                .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                         }
                         
                         Spacer()
                         
-                        // 파일 크기
                         Text(ByteCountFormatter.string(fromByteCount: Int64(document.size), countStyle: .file))
                             .font(.caption)
-                            .foregroundColor(.gray)
+                            .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                         
-                        // 화살표 추가
                         Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
+                            .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                             .padding(.leading, 8)
                     }
                     
                     Divider()
+                        .background(colorScheme == .dark ? Color.gray.opacity(0.3) : Color.gray.opacity(0.2))
                     
-                    // 업로드 날짜
                     Text("업로드: \((document.dateUploaded ?? Date()).formatted(date: .abbreviated, time: .shortened))")
                         .font(.caption)
-                        .foregroundColor(.gray)
+                        .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                 }
                 .padding()
-                .background(Color(.systemBackground))
+                .background(colorScheme == .dark ? Color(UIColor.systemGray5) : Color(.systemBackground))
                 .cornerRadius(12)
-                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                .shadow(
+                    color: colorScheme == .dark ? Color.black.opacity(0.3) : Color.black.opacity(0.1),
+                    radius: 5,
+                    x: 0,
+                    y: 2
+                )
             }
             .disabled(isEditMode)
         }
@@ -270,19 +298,21 @@ struct DocumentCard: View {
 
 // 빈 상태 뷰
 struct EmptyStateView: View {
+    let colorScheme: ColorScheme
+    
     var body: some View {
         VStack(spacing: 20) {
             Image(systemName: "doc.text.magnifyingglass")
                 .font(.system(size: 50))
-                .foregroundColor(.gray)
+                .foregroundColor(colorScheme == .dark ? .gray : .secondary)
             
             Text("파일이 없습니다")
                 .font(.headline)
-                .foregroundColor(.gray)
+                .foregroundColor(colorScheme == .dark ? .white : .black)
             
             Text("이 카테고리에 해당하는 파일이 아직 없습니다")
                 .font(.subheadline)
-                .foregroundColor(.gray)
+                .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                 .multilineTextAlignment(.center)
         }
         .padding()

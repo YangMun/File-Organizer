@@ -18,8 +18,6 @@
 		81DAB9752D8D08BC00027CA6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 81DAB9742D8D08BC00027CA6 /* .gitignore */; };
 		81DAB9792D8D0BB500027CA6 /* ReadMe.md in Resources */ = {isa = PBXBuildFile; fileRef = 81DAB9782D8D0BB500027CA6 /* ReadMe.md */; };
 		81DAB9852D8D446900027CA6 /* FileUpLoadFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */; };
-		81DAB9872D8D65A400027CA6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9862D8D659B00027CA6 /* Filter.swift */; };
-		81DAB98A2D8FB45200027CA6 /* CoreHwp in Frameworks */ = {isa = PBXBuildFile; productRef = 81DAB9892D8FB45200027CA6 /* CoreHwp */; };
 		81DAB98C2D9105AD00027CA6 /* AllShowFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */; };
 		81DAB99A2D91127600027CA6 /* FileOrganizer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9972D91127600027CA6 /* FileOrganizer.xcdatamodeld */; };
 		81DAB9A12D9115E600027CA6 /* FileEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A02D9115E600027CA6 /* FileEntity+CoreDataProperties.swift */; };
@@ -28,6 +26,7 @@
 		81DAB9A62D91179300027CA6 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A52D91179200027CA6 /* CoreDataManager.swift */; };
 		81DAB9A82D9136FF00027CA6 /* ShowFileFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A72D9136EE00027CA6 /* ShowFileFolder.swift */; };
 		81DAB9AA2D913D8600027CA6 /* FileDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9A92D913D7D00027CA6 /* FileDetailView.swift */; };
+		81DAB9AC2D92642600027CA6 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9AB2D92642200027CA6 /* ColorTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +44,6 @@
 		81DAB9742D8D08BC00027CA6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		81DAB9782D8D0BB500027CA6 /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
 		81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUpLoadFunction.swift; sourceTree = "<group>"; };
-		81DAB9862D8D659B00027CA6 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllShowFileView.swift; sourceTree = "<group>"; };
 		81DAB9992D91127600027CA6 /* FileOrganizer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FileOrganizer.xcdatamodel; sourceTree = "<group>"; };
 		81DAB99F2D9115E600027CA6 /* FileEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -54,6 +52,7 @@
 		81DAB9A52D91179200027CA6 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		81DAB9A72D9136EE00027CA6 /* ShowFileFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFileFolder.swift; sourceTree = "<group>"; };
 		81DAB9A92D913D7D00027CA6 /* FileDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDetailView.swift; sourceTree = "<group>"; };
+		81DAB9AB2D92642200027CA6 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81DAB98A2D8FB45200027CA6 /* CoreHwp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,10 +96,10 @@
 		81DAB9632D8CFE7A00027CA6 /* File Organizer */ = {
 			isa = PBXGroup;
 			children = (
+				81DAB9AB2D92642200027CA6 /* ColorTheme.swift */,
 				81DAB9A92D913D7D00027CA6 /* FileDetailView.swift */,
 				81DAB9A72D9136EE00027CA6 /* ShowFileFolder.swift */,
 				81DAB98B2D9105A500027CA6 /* AllShowFileView.swift */,
-				81DAB9862D8D659B00027CA6 /* Filter.swift */,
 				81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */,
 				81DAB9712D8D02C200027CA6 /* SettingsView.swift */,
 				81DAB96F2D8D02AE00027CA6 /* FileView.swift */,
@@ -146,7 +144,6 @@
 			);
 			name = "File Organizer";
 			packageProductDependencies = (
-				81DAB9892D8FB45200027CA6 /* CoreHwp */,
 			);
 			productName = "File Organizer";
 			productReference = 81DAB94B2D8CFE7300027CA6 /* File Organizer.app */;
@@ -177,7 +174,6 @@
 			mainGroup = 81DAB9422D8CFE7300027CA6;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				81DAB9882D8FB45200027CA6 /* XCRemoteSwiftPackageReference "hwp-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 81DAB94C2D8CFE7300027CA6 /* Products */;
@@ -212,7 +208,6 @@
 				81DAB9702D8D02B000027CA6 /* FileView.swift in Sources */,
 				81DAB96E2D8D005700027CA6 /* RecentUpLoadView.swift in Sources */,
 				81DAB9852D8D446900027CA6 /* FileUpLoadFunction.swift in Sources */,
-				81DAB9872D8D65A400027CA6 /* Filter.swift in Sources */,
 				81DAB96A2D8D001E00027CA6 /* MainView.swift in Sources */,
 				81DAB9722D8D02C300027CA6 /* SettingsView.swift in Sources */,
 				81DAB9652D8CFE7A00027CA6 /* File_OrganizerApp.swift in Sources */,
@@ -222,6 +217,7 @@
 				81DAB9A12D9115E600027CA6 /* FileEntity+CoreDataProperties.swift in Sources */,
 				81DAB9A82D9136FF00027CA6 /* ShowFileFolder.swift in Sources */,
 				81DAB9AA2D913D8600027CA6 /* FileDetailView.swift in Sources */,
+				81DAB9AC2D92642600027CA6 /* ColorTheme.swift in Sources */,
 				81DAB9A62D91179300027CA6 /* CoreDataManager.swift in Sources */,
 				81DAB9A22D9115E600027CA6 /* FileEntity+CoreDataClass.swift in Sources */,
 			);
@@ -358,6 +354,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "File-Organizer-Info.plist";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -366,8 +363,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -399,6 +396,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "File-Organizer-Info.plist";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -407,8 +405,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -448,25 +446,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		81DAB9882D8FB45200027CA6 /* XCRemoteSwiftPackageReference "hwp-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sboh1214/hwp-swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.14.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		81DAB9892D8FB45200027CA6 /* CoreHwp */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81DAB9882D8FB45200027CA6 /* XCRemoteSwiftPackageReference "hwp-swift" */;
-			productName = CoreHwp;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		81DAB9972D91127600027CA6 /* FileOrganizer.xcdatamodeld */ = {
