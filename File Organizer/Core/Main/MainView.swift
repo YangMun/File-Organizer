@@ -3,10 +3,11 @@ import SwiftUI
 struct MainView: View {
     @State private var selectedTab = 0
     @StateObject private var fileUploader = FileUpLoadFunction()
+    @AppStorage("isEnglish") private var isEnglish = false
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            // 홈 탭
+            // Home tab
             ZStack {
                 Color(.systemGroupedBackground)
                     .ignoresSafeArea()
@@ -23,33 +24,33 @@ struct MainView: View {
             }
             .tabItem {
                 Image(systemName: "house.fill")
-                Text("홈")
+                Text(isEnglish ? "Home" : "홈")
             }
             .tag(0)
             
-            // 파일 탭
+            // Files tab
             FileView()
                 .tabItem {
                     Image(systemName: "doc.fill")
-                    Text("파일")
+                    Text(isEnglish ? "Files" : "파일")
                 }
                 .tag(1)
             
-            // 설정 탭
+            // Settings tab
             SettingsView()
                 .tabItem {
                     Image(systemName: "gearshape.fill")
-                    Text("설정")
+                    Text(isEnglish ? "Settings" : "설정")
                 }
                 .tag(2)
         }
         .tint(.blue)
         .onAppear {
-            // TabBar 스타일 설정
+            // TabBar style settings
             let appearance = UITabBarAppearance()
             appearance.configureWithDefaultBackground()
             
-            // 선택되지 않은 아이템 색상 설정
+            // Unselected item color settings
             let unselectedColor = UIColor.gray
             appearance.stackedLayoutAppearance.normal.iconColor = unselectedColor
             appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: unselectedColor]

@@ -49,6 +49,7 @@ git clone https://github.com/YOUR_USERNAME/File-Organizer.git
 3. Build 및 실행
 
 ## 📂 프로젝트 구조
+```
 File Organizer/
 ├── App/
 │ ├── File_OrganizerApp.swift
@@ -85,3 +86,4 @@ File Organizer/
 │
 └── Preview Content/
 └── Preview Assets.xcassets
+```

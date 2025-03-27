@@ -102,6 +102,7 @@
 				81DAB9682D8CFE8500027CA6 /* File-Organizer-Info.plist */,
 				81DAB95E2D8CFE7A00027CA6 /* Preview Content */,
 				81DAB95F2D8CFE7A00027CA6 /* Assets.xcassets */,
+				81DAB9612D8CFE7A00027CA6 /* File_Organizer.entitlements */,
 			);
 			path = "File Organizer";
 			sourceTree = "<group>";
@@ -129,7 +130,6 @@
 		81DAB9AE2D9284FD00027CA6 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				81DAB9612D8CFE7A00027CA6 /* File_Organizer.entitlements */,
 				81DAB9622D8CFE7A00027CA6 /* File_OrganizerApp.swift */,
 			);
 			path = App;

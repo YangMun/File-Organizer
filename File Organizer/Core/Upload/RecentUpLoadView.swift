@@ -4,6 +4,7 @@ struct RecentUpLoadView: View {
     @ObservedObject var fileUploader: FileUpLoadFunction
     @State private var showAllFiles = false
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("isEnglish") private var isEnglish = false
     
     // 중복 파일 제거하고 최신 파일만 보여주는 계산 속성 수정
     private var uniqueFiles: [UploadedFile] {
@@ -30,7 +31,7 @@ struct RecentUpLoadView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("최근 업로드")
+                Text(isEnglish ? "Recent Uploads" : "최근 업로드")
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundColor(colorScheme == .dark ? .white : .black)
@@ -40,7 +41,7 @@ struct RecentUpLoadView: View {
                 Button(action: {
                     showAllFiles = true
                 }) {
-                    Text("모두 보기")
+                    Text(isEnglish ? "View All" : "모두 보기")
                         .foregroundColor(.blue)
                 }
             }
@@ -129,21 +130,21 @@ struct RecentUpLoadView: View {
         
         if let minutes = components.minute {
             if minutes < 1 {
-                return "방금 전"
+                return isEnglish ? "Just now" : "방금 전"
             }
             if minutes < 60 {
-                return "\(minutes)분 전"
+                return isEnglish ? "\(minutes) mins ago" : "\(minutes)분 전"
             }
         }
         
         if let hours = components.hour, hours < 24 {
-            return "\(hours)시간 전"
+            return isEnglish ? "\(hours) hours ago" : "\(hours)시간 전"
         }
         
         // 24시간 이상 지난 경우 날짜와 시간 표시
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "M월 d일 HH:mm"
+        formatter.locale = Locale(identifier: isEnglish ? "en_US" : "ko_KR")
+        formatter.dateFormat = isEnglish ? "MMM d, HH:mm" : "M월 d일 HH:mm"
         return formatter.string(from: date)
     }
 }
