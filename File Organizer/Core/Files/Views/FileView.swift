@@ -3,11 +3,18 @@ import SwiftUI
 struct FileTypeItem: Identifiable {
     let id = UUID()
     let imageName: String
-    let title: String
+    let titleKo: String
+    let titleEn: String
+    
+    var title: String {
+        @AppStorage("isEnglish") var isEnglish = false
+        return isEnglish ? titleEn : titleKo
+    }
 }
 
 struct FileView: View {
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("isEnglish") private var isEnglish = false
     
     let columns = [
         GridItem(.flexible()),
@@ -15,11 +22,31 @@ struct FileView: View {
     ]
     
     let fileTypes = [
-        FileTypeItem(imageName: "PDF", title: "PDF 파일"),
-        FileTypeItem(imageName: "Word", title: "워드 문서"),
-        FileTypeItem(imageName: "HWP", title: "한글 문서"),
-        FileTypeItem(imageName: "Excel", title: "엑셀 파일"),
-        FileTypeItem(imageName: "PPT", title: "PPT 파일")
+        FileTypeItem(
+            imageName: "PDF", 
+            titleKo: "PDF 파일",
+            titleEn: "PDF Files"
+        ),
+        FileTypeItem(
+            imageName: "Word", 
+            titleKo: "워드 문서",
+            titleEn: "Word Documents"
+        ),
+        FileTypeItem(
+            imageName: "HWP", 
+            titleKo: "한글 문서",
+            titleEn: "Hangul Documents"
+        ),
+        FileTypeItem(
+            imageName: "Excel", 
+            titleKo: "엑셀 파일",
+            titleEn: "Excel Files"
+        ),
+        FileTypeItem(
+            imageName: "PPT", 
+            titleKo: "PPT 파일",
+            titleEn: "PPT Files"
+        )
     ]
     
     var body: some View {
@@ -55,6 +82,7 @@ struct FileView: View {
                 .padding()
             }
             .background(colorScheme == .dark ? Color(UIColor.systemGray6).opacity(0.8) : Color(UIColor.systemGray6))
+            .navigationTitle(isEnglish ? "Files" : "파일")
         }
     }
 }

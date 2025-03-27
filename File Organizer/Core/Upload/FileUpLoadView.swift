@@ -3,6 +3,7 @@ import SwiftUI
 struct FileUpLoadView: View {
     @ObservedObject var fileUploader: FileUpLoadFunction
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("isEnglish") private var isEnglish = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -11,19 +12,19 @@ struct FileUpLoadView: View {
                 .frame(width: 60, height: 60)
                 .foregroundColor(.blue)
             
-            Text("파일 업로드")
+            Text(isEnglish ? "File Upload" : "파일 업로드")
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(colorScheme == .dark ? .white : .black)
             
-            Text("기기에서 파일을 선택해주세요.")
+            Text(isEnglish ? "Please select files from your device." : "기기에서 파일을 선택해주세요.")
                 .multilineTextAlignment(.center)
                 .foregroundColor(colorScheme == .dark ? .gray : .secondary)
             
             Button(action: {
                 fileUploader.openFilePicker()
             }) {
-                Text("파일 선택하기")
+                Text(isEnglish ? "Select Files" : "파일 선택하기")
                     .foregroundColor(.white)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 12)
@@ -34,7 +35,9 @@ struct FileUpLoadView: View {
             
             if fileUploader.isLoading {
                 VStack(spacing: 8) {
-                    Text("파일 처리 중... (\(fileUploader.processedFilesCount)/\(fileUploader.totalFiles))")
+                    Text(isEnglish ? 
+                         "Processing files... (\(fileUploader.processedFilesCount)/\(fileUploader.totalFiles))" :
+                         "파일 처리 중... (\(fileUploader.processedFilesCount)/\(fileUploader.totalFiles))")
                         .font(.caption)
                         .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                     
