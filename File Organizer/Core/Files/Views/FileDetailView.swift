@@ -10,10 +10,13 @@ struct FileDetailView: View {
     @State private var errorMessage = ""
     @State private var interactionController: UIDocumentInteractionController?
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("isEnglish") private var isEnglish = false
     
     private func loadDocument() {
         guard let bookmarkData = document.bookmarkData else {
-            errorMessage = "북마크 데이터를 찾을 수 없습니다."
+            errorMessage = isEnglish ? 
+                "Bookmark data not found." : 
+                "북마크 데이터를 찾을 수 없습니다."
             showError = true
             return
         }
@@ -32,11 +35,15 @@ struct FileDetailView: View {
                     isPreviewPresented = true
                 }
             } else {
-                errorMessage = "파일에 접근할 수 없습니다."
+                errorMessage = isEnglish ? 
+                    "Cannot access the file." : 
+                    "파일에 접근할 수 없습니다."
                 showError = true
             }
         } catch {
-            errorMessage = "파일을 불러올 수 없습니다: \(error.localizedDescription)"
+            errorMessage = isEnglish ? 
+                "Cannot load file: \(error.localizedDescription)" : 
+                "파일을 불러올 수 없습니다: \(error.localizedDescription)"
             showError = true
         }
     }
@@ -101,12 +108,12 @@ struct FileDetailView: View {
                 
                 VStack(alignment: .leading, spacing: 8) {
                     DetailRow(
-                        title: "파일 크기",
+                        title: isEnglish ? "File Size" : "파일 크기",
                         value: ByteCountFormatter.string(fromByteCount: Int64(document.size), countStyle: .file),
                         colorScheme: colorScheme
                     )
                     DetailRow(
-                        title: "업로드 날짜",
+                        title: isEnglish ? "Upload Date" : "업로드 날짜",
                         value: (document.dateUploaded ?? Date()).formatted(),
                         colorScheme: colorScheme
                     )
@@ -127,7 +134,7 @@ struct FileDetailView: View {
                     loadDocument()
                 }) {
                     HStack {
-                        Text("파일 보기")
+                        Text(isEnglish ? "View File" : "파일 보기")
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -138,7 +145,9 @@ struct FileDetailView: View {
                 
                 // 한글 파일일 경우에만 안내 메시지 표시
                 if document.fileExtension?.lowercased() == "hwp" {
-                    Text("한컴오피스 Viewer 프로그램이 필요합니다.")
+                    Text(isEnglish ? 
+                         "Hancom Office Viewer program is required." : 
+                         "한컴오피스 Viewer 프로그램이 필요합니다.")
                         .font(.caption)
                         .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                         .padding(.bottom, 4)
@@ -151,8 +160,8 @@ struct FileDetailView: View {
         .padding()
         .navigationBarTitleDisplayMode(.inline)
         .background(colorScheme == .dark ? Color(UIColor.black) : Color(.systemGroupedBackground))
-        .alert("오류", isPresented: $showError) {
-            Button("확인", role: .cancel) {}
+        .alert(isEnglish ? "Error" : "오류", isPresented: $showError) {
+            Button(isEnglish ? "OK" : "확인", role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -168,6 +177,7 @@ struct DetailRow: View {
     let title: String
     let value: String
     let colorScheme: ColorScheme
+    @AppStorage("isEnglish") private var isEnglish = false
     
     var body: some View {
         HStack {

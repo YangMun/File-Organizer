@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ShowFileFolder: View {
     @Environment(\.colorScheme) var colorScheme
+    @AppStorage("isEnglish") private var isEnglish = false
     @State private var selectedDocuments: [FileEntity] = []
     @State private var isSearching: Bool = false
     @State private var searchText: String = ""
@@ -21,15 +22,15 @@ struct ShowFileFolder: View {
         // 파일 타입에 따른 필터링
         selectedDocuments = allDocuments.filter { document in
             switch categoryType {
-            case "PDF 파일":
+            case isEnglish ? "PDF Files" : "PDF 파일":
                 return document.fileExtension?.lowercased() == "pdf"
-            case "워드 문서":
+            case isEnglish ? "Word Documents" : "워드 문서":
                 return ["doc", "docx"].contains(document.fileExtension?.lowercased() ?? "")
-            case "한글 문서":
+            case isEnglish ? "Hangul Documents" : "한글 문서":
                 return document.fileExtension?.lowercased() == "hwp"
-            case "엑셀 파일":
+            case isEnglish ? "Excel Files" : "엑셀 파일":
                 return ["xls", "xlsx"].contains(document.fileExtension?.lowercased() ?? "")
-            case "PPT 파일":
+            case isEnglish ? "PPT Files" : "PPT 파일":
                 return ["ppt", "pptx"].contains(document.fileExtension?.lowercased() ?? "")
             default:
                 return false
@@ -82,7 +83,9 @@ struct ShowFileFolder: View {
                             selectedItems.removeAll()
                         }
                     }) {
-                        Text(selectedItems.isEmpty ? "전체 선택" : "선택 해제")
+                        Text(selectedItems.isEmpty ? 
+                             (isEnglish ? "Select All" : "전체 선택") : 
+                             (isEnglish ? "Deselect All" : "선택 해제"))
                             .foregroundColor(.blue)
                     }
                     .padding()
@@ -92,7 +95,7 @@ struct ShowFileFolder: View {
                     Button(action: {
                         deleteSelectedFiles()
                     }) {
-                        Text("선택 삭제")
+                        Text(isEnglish ? "Delete Selected" : "선택 삭제")
                             .foregroundColor(.red)
                     }
                     .padding()
@@ -110,8 +113,8 @@ struct ShowFileFolder: View {
         .refreshable {
             loadDocuments()
         }
-        .alert("삭제 완료", isPresented: $showDeleteAlert) {
-            Button("확인", role: .cancel) {
+        .alert(isEnglish ? "Delete Complete" : "삭제 완료", isPresented: $showDeleteAlert) {
+            Button(isEnglish ? "OK" : "확인", role: .cancel) {
                 selectedItems.removeAll()
             }
         } message: {
@@ -127,7 +130,9 @@ struct ShowFileFolder: View {
                 selectedItems.removeAll()
             }
         }) {
-            Text(isEditMode ? "완료" : "편집")
+            Text(isEditMode ? 
+                 (isEnglish ? "Done" : "완료") : 
+                 (isEnglish ? "Edit" : "편집"))
         }
     }
     
@@ -141,7 +146,9 @@ struct ShowFileFolder: View {
         }
         
         selectedDocuments.removeAll { selectedItems.contains($0.id!) }
-        deletedFileName = "\(fileNames) 파일이 삭제되었습니다."
+        deletedFileName = isEnglish ? 
+            "\(fileNames) files have been deleted." : 
+            "\(fileNames) 파일이 삭제되었습니다."
         showDeleteAlert = true
         
         if selectedDocuments.isEmpty {
@@ -154,6 +161,7 @@ struct ShowFileFolder: View {
 struct SearchBar: View {
     @Binding var text: String
     @Binding var isSearching: Bool
+    @AppStorage("isEnglish") private var isEnglish = false
     let colorScheme: ColorScheme
     
     var body: some View {
@@ -162,7 +170,7 @@ struct SearchBar: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 
-                TextField("파일 검색", text: $text)
+                TextField(isEnglish ? "Search files" : "파일 검색", text: $text)
                     .foregroundColor(colorScheme == .dark ? .white : .primary)
                 
                 if !text.isEmpty {
@@ -183,6 +191,7 @@ struct SearchBar: View {
 
 // 문서 카드 컴포넌트
 struct DocumentCard: View {
+    @AppStorage("isEnglish") private var isEnglish = false
     let document: FileEntity
     @Binding var showDeleteAlert: Bool
     @Binding var deletedFileName: String
@@ -283,14 +292,16 @@ struct DocumentCard: View {
         .buttonStyle(PlainButtonStyle())
         .contextMenu {
             Button(action: {
-                deletedFileName = "\(document.name ?? "Unknown") 파일이 삭제되었습니다."
+                deletedFileName = isEnglish ?
+                    "\(document.name ?? "Unknown") file has been deleted." :
+                    "\(document.name ?? "Unknown") 파일이 삭제되었습니다."
                 CoreDataManager.shared.deleteFile(document)
                 if let index = selectedDocuments.firstIndex(where: { $0.id == document.id }) {
                     selectedDocuments.remove(at: index)
                 }
                 showDeleteAlert = true
             }) {
-                Label("삭제", systemImage: "trash")
+                Label(isEnglish ? "Delete" : "삭제", systemImage: "trash")
             }
         }
     }
@@ -298,6 +309,7 @@ struct DocumentCard: View {
 
 // 빈 상태 뷰
 struct EmptyStateView: View {
+    @AppStorage("isEnglish") private var isEnglish = false
     let colorScheme: ColorScheme
     
     var body: some View {
@@ -306,11 +318,13 @@ struct EmptyStateView: View {
                 .font(.system(size: 50))
                 .foregroundColor(colorScheme == .dark ? .gray : .secondary)
             
-            Text("파일이 없습니다")
+            Text(isEnglish ? "No Files" : "파일이 없습니다")
                 .font(.headline)
                 .foregroundColor(colorScheme == .dark ? .white : .black)
             
-            Text("이 카테고리에 해당하는 파일이 아직 없습니다")
+            Text(isEnglish ? 
+                 "There are no files in this category yet" : 
+                 "이 카테고리에 해당하는 파일이 아직 없습니다")
                 .font(.subheadline)
                 .foregroundColor(colorScheme == .dark ? .gray : .secondary)
                 .multilineTextAlignment(.center)

@@ -3,6 +3,7 @@ import SwiftUI
 struct AllShowFileView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject var fileUploader: FileUpLoadFunction
+    @AppStorage("isEnglish") private var isEnglish = false
     
     // 중복 파일 제거하고 최신 파일만 보여주는 계산 속성 수정
     private var uniqueFiles: [UploadedFile] {
@@ -44,11 +45,11 @@ struct AllShowFileView: View {
                 }
                 .padding(.horizontal)
             }
-            .navigationTitle("모든 파일")
+            .navigationTitle(isEnglish ? "All Files" : "모든 파일")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("닫기") {
+                    Button(isEnglish ? "Close" : "닫기") {
                         dismiss()
                     }
                 }
@@ -61,6 +62,7 @@ struct AllShowFileView: View {
 // 파일 행을 표시하는 하위 뷰
 struct FileRowView: View {
     let file: UploadedFile
+    @AppStorage("isEnglish") private var isEnglish = false
     
     var body: some View {
         HStack(spacing: 16) {
