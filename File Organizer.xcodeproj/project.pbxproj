@@ -31,6 +31,7 @@
 		81DAB9CA2D964FF000027CA6 /* LoadingAni.json in Resources */ = {isa = PBXBuildFile; fileRef = 81DAB9C92D964FF000027CA6 /* LoadingAni.json */; };
 		81DAB9CD2D96500E00027CA6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 81DAB9CC2D96500E00027CA6 /* Lottie */; };
 		81DAB9CF2D96514100027CA6 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9CE2D96513D00027CA6 /* LoadingView.swift */; };
+		81DAB9D12D965BAA00027CA6 /* InterstitialAdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DAB9D02D965BA600027CA6 /* InterstitialAdManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		81DAB9AB2D92642200027CA6 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		81DAB9C92D964FF000027CA6 /* LoadingAni.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LoadingAni.json; sourceTree = "<group>"; };
 		81DAB9CE2D96513D00027CA6 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		81DAB9D02D965BA600027CA6 /* InterstitialAdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialAdManager.swift; sourceTree = "<group>"; };
 		A9C7060B6646F761955DBD24 /* Pods-File Organizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-File Organizer.release.xcconfig"; path = "Target Support Files/Pods-File Organizer/Pods-File Organizer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -209,6 +211,7 @@
 		81DAB9B32D92859F00027CA6 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
+				81DAB9D02D965BA600027CA6 /* InterstitialAdManager.swift */,
 				81DAB9842D8D445E00027CA6 /* FileUpLoadFunction.swift */,
 			);
 			path = Functions;
@@ -345,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81DAB98C2D9105AD00027CA6 /* AllShowFileView.swift in Sources */,
+				81DAB9D12D965BAA00027CA6 /* InterstitialAdManager.swift in Sources */,
 				81DAB9702D8D02B000027CA6 /* FileView.swift in Sources */,
 				81DAB96E2D8D005700027CA6 /* RecentUpLoadView.swift in Sources */,
 				81DAB9852D8D446900027CA6 /* FileUpLoadFunction.swift in Sources */,
