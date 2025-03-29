@@ -98,7 +98,7 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
                 if Task.isCancelled { break }
                 
                 guard url.startAccessingSecurityScopedResource() else {
-                    print("Failed to access security scoped resource: \(url.lastPathComponent)")
+                    //print("Failed to access security scoped resource: \(url.lastPathComponent)")
                     continue
                 }
                 
@@ -139,12 +139,12 @@ extension FileUpLoadFunction: UIDocumentPickerDelegate {
                             self.uploadProgress = Double(self.processedFilesCount) / Double(self.totalFiles)
                         }
                     } catch {
-                        print("Error creating bookmark: \(error.localizedDescription)")
+                        //print("Error creating bookmark: \(error.localizedDescription)")
                     }
                 }
                 
                 if let error = error {
-                    print("File coordination error: \(error.localizedDescription)")
+                    //print("File coordination error: \(error.localizedDescription)")
                 }
                 
                 try? await Task.sleep(nanoseconds: 50_000_000) // 0.05초
