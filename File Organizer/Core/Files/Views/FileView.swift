@@ -15,6 +15,7 @@ struct FileTypeItem: Identifiable {
 struct FileView: View {
     @Environment(\.colorScheme) var colorScheme
     @AppStorage("isEnglish") private var isEnglish = false
+    @State private var navigationPath = NavigationPath()
     
     let columns = [
         GridItem(.flexible()),
@@ -50,11 +51,14 @@ struct FileView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $navigationPath) {
             ScrollView {
+                Spacer()
+                    .frame(height: 60)
+                
                 LazyVGrid(columns: columns, spacing: 20) {
                     ForEach(fileTypes) { item in
-                        NavigationLink(destination: ShowFileFolder(fileType: item.title)) {
+                        NavigationLink(value: item.title) {
                             VStack {
                                 Image(item.imageName)
                                     .resizable()
@@ -82,7 +86,12 @@ struct FileView: View {
                 .padding()
             }
             .background(colorScheme == .dark ? Color(UIColor.systemGray6).opacity(0.8) : Color(UIColor.systemGray6))
-            .navigationTitle(isEnglish ? "Files" : "파일")
+            .navigationDestination(for: String.self) { fileType in
+                ShowFileFolder(fileType: fileType)
+            }
+        }
+        .onAppear {
+            navigationPath.removeLast(navigationPath.count)
         }
     }
 }
