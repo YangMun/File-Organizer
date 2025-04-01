@@ -138,21 +138,29 @@ struct ShowFileFolder: View {
     
     // 선택된 파일들 삭제
     private func deleteSelectedFiles() {
-        let filesToDelete = selectedDocuments.filter { selectedItems.contains($0.id!) }
-        let fileNames = filesToDelete.compactMap { $0.name }.joined(separator: ", ")
-        
-        for file in filesToDelete {
-            CoreDataManager.shared.deleteFile(file)
+        // 1. 선택된 파일들 필터링 (id가 nil이 아닌 파일만)
+        let filesToDelete = selectedDocuments.filter { document in
+            guard let documentId = document.id else { return false }
+            return selectedItems.contains(documentId)
         }
         
-        selectedDocuments.removeAll { selectedItems.contains($0.id!) }
-        deletedFileName = isEnglish ? 
-            "\(fileNames) files have been deleted." : 
-            "\(fileNames) 파일이 삭제되었습니다."
-        showDeleteAlert = true
+        // 2. UI에서 즉시 제거
+        selectedDocuments.removeAll { document in
+            guard let documentId = document.id else { return false }
+            return selectedItems.contains(documentId)
+        }
         
-        if selectedDocuments.isEmpty {
-            isEditMode = false
+        // 3. 백그라운드에서 파일 삭제 수행
+        DispatchQueue.global(qos: .userInitiated).async {
+            for file in filesToDelete {
+                CoreDataManager.shared.deleteFile(file)
+            }
+            
+            // 4. 메인 스레드에서 선택 초기화 및 편집 모드 종료
+            DispatchQueue.main.async {
+                selectedItems.removeAll()
+                isEditMode = false  // 편집 모드 종료
+            }
         }
     }
 }
@@ -223,10 +231,12 @@ struct DocumentCard: View {
     var body: some View {
         HStack {
             if isEditMode {
-                Image(systemName: selectedItems.contains(document.id!) ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(selectedItems.contains(document.id!) ? .blue : .gray)
-                    .imageScale(.large)
-                    .padding(.leading)
+                if let documentId = document.id {
+                    Image(systemName: selectedItems.contains(documentId) ? "checkmark.circle.fill" : "circle")
+                        .foregroundColor(selectedItems.contains(documentId) ? .blue : .gray)
+                        .imageScale(.large)
+                        .padding(.leading)
+                }
             }
             
             NavigationLink(destination: FileDetailView(document: document)) {
@@ -281,25 +291,21 @@ struct DocumentCard: View {
         }
         .contentShape(Rectangle())
         .onTapGesture {
-            if isEditMode {
-                if selectedItems.contains(document.id!) {
-                    selectedItems.remove(document.id!)
+            if isEditMode, let documentId = document.id {
+                if selectedItems.contains(documentId) {
+                    selectedItems.remove(documentId)
                 } else {
-                    selectedItems.insert(document.id!)
+                    selectedItems.insert(documentId)
                 }
             }
         }
         .buttonStyle(PlainButtonStyle())
         .contextMenu {
             Button(action: {
-                deletedFileName = isEnglish ?
-                    "\(document.name ?? "Unknown") file has been deleted." :
-                    "\(document.name ?? "Unknown") 파일이 삭제되었습니다."
                 CoreDataManager.shared.deleteFile(document)
                 if let index = selectedDocuments.firstIndex(where: { $0.id == document.id }) {
                     selectedDocuments.remove(at: index)
                 }
-                showDeleteAlert = true
             }) {
                 Label(isEnglish ? "Delete" : "삭제", systemImage: "trash")
             }
