@@ -79,12 +79,17 @@ class CoreDataManager {
     
     // MARK: - Delete
     func deleteFile(_ file: FileEntity) {
-        viewContext.delete(file)
-        
-        do {
-            try viewContext.save()
-        } catch {
-            //print("파일 삭제 실패: \(error.localizedDescription)")
+        // 메인 스레드에서 CoreData 작업 수행
+        DispatchQueue.main.async {
+            self.viewContext.delete(file)
+            
+            do {
+                try self.viewContext.save()
+            } catch {
+//                print("파일 삭제 실패: \(error.localizedDescription)")
+                // 에러 발생 시 롤백
+                self.viewContext.rollback()
+            }
         }
     }
     
