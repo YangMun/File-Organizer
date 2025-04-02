@@ -22,8 +22,10 @@
 ## 📱 스크린샷
 
 <p float="left">
-  <img src="003.png" width="400" />
-  <img src="004.png" width="400" />
+  <img src="ScreenShot/001.png" width="200" />
+  <img src="ScreenShot/002.png" width="200" />
+  <img src="ScreenShot/003.png" width="200" />
+  <img src="ScreenShot/004.png" width="200" />
 </p>
 
 ## 🔍 현재 구현된 기능
